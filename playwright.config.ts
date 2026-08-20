@@ -2,9 +2,11 @@ import { defineConfig, devices } from '@playwright/test';
 import 'dotenv/config';
 
 export default defineConfig({
-  testDir: './tests', // path to your tests folder
+  testDir: './tests',
+
   timeout: 120000,
   retries: 0,
+
   use: {
     baseURL: 'https://www.saucedemo.com/',
     headless: true,
@@ -12,11 +14,19 @@ export default defineConfig({
     ignoreHTTPSErrors: true,
     video: 'retain-on-failure',
   },
+
   projects: [
     {
+      name: 'setup',
+      testMatch: /auth\.setup\.ts/,
+    },
+
+    {
       name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
-    }
-    
+      use: {
+        ...devices['Desktop Chrome'],
+      },
+      dependencies: ['setup'],
+    },
   ],
 });

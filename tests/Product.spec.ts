@@ -28,6 +28,29 @@ test.describe('Product Page Test Scenarios', () => {
   })
 
   
+ test('Add product to cart and removing it and then verify cart count', async ({ page }) => {
+    const productPage = new ProductPage(page);
+    await page.goto('/inventory.html');
+    await productPage.addToCart('Sauce Labs Backpack');
+    const cartCount = page.locator('.shopping_cart_badge');
+    await expect(cartCount).toHaveText('1');
+    await productPage.removeFromCart('Sauce Labs Backpack');
+    await expect(cartCount).toHaveCount(0);
+  })
+
+  test('Adding multiple product to cart and verifying cart count', async({page}) => {
+    const productPage = new ProductPage (page);
+    await page.goto ('/inventory.html');
+    await productPage.addToCart('Sauce Labs Backpack');
+    await productPage.addToCart('Sauce Labs Bolt T-Shirt');
+    await productPage.addToCart('Sauce Labs Bike Light');
+    const cartCount = page.locator('.shopping_cart_badge');
+    await expect(cartCount).toHaveText('3');
+   
 
 
-})
+
+  })
+});
+
+ 

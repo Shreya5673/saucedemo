@@ -7,6 +7,8 @@ export class ProductPage {
   readonly productImage: Locator;
   readonly addToCartButton: Locator;
   readonly openCartButton: Locator;
+  readonly removeFromCartButton: Locator;
+  readonly cartCount: Locator;
 
   constructor(page: Page) {
     this.page = page;
@@ -16,6 +18,8 @@ export class ProductPage {
     this.productImage = page.getByTestId('inventory-item-image');
     this.addToCartButton = page.getByTestId('add-to-cart-button');
     this.openCartButton = page.locator('[data-test="shopping-cart-link"]');
+    this.removeFromCartButton = page.locator('[data-test="remove-from-cart-button"]');
+    this.cartCount = page.locator('.shopping_cart_badge');
   }
 
   async getProductTitle(productName: string) {
@@ -49,4 +53,10 @@ export class ProductPage {
   async openCart() {
     await this.openCartButton.click();
   }
-}
+  
+async removeFromCart(productName: string) {
+  const productElement = this.page.locator(
+      `.inventory_item:has-text("${productName}")`
+    );
+    await productElement.locator('button').click();
+}}

@@ -7,6 +7,8 @@ export class CheckoutPage {
   readonly postalCodeInput: Locator;
   readonly continueButton: Locator;
   readonly finishButton: Locator;
+  readonly cancelButton: Locator;
+
 
   constructor(page: Page) {
     this.page = page;
@@ -16,6 +18,7 @@ export class CheckoutPage {
     this.postalCodeInput = page.locator('[data-test="postalCode"]');
     this.continueButton = page.locator('[data-test="continue"]');
     this.finishButton = page.locator('[data-test="finish"]');
+     this.cancelButton = page.locator('[data-test="cancel"]');
   }
 
   async fillCustomerInformation(
@@ -34,5 +37,9 @@ export class CheckoutPage {
 
   async finish() {
     await this.finishButton.click();
+  }
+
+  async cancel(){
+    await this.cancelButton.click();
   }
 }

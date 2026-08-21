@@ -1,17 +1,13 @@
-import { test, expect } from '@playwright/test';
-import { ProductPage } from '../pages/ProductPage';
-import { CartPage } from '../pages/CartPage';
-import { CheckoutPage } from '../pages/CheckoutPage';
+import { test, expect } from '../fixtures/test-fixtures';
+
 
 test.use({ storageState: 'storage/Auth.json' });
 
 test.describe('Checkout Test Scenarios', () => {
 
-  test('Checkout', async ({ page }) => {
+  test('Checkout', async ({ page, productPage, cartPage, checkoutPage}) => {
 
-    const productPage = new ProductPage(page);
-    const cartPage = new CartPage(page);
-    const checkoutPage = new CheckoutPage(page);
+    
 
     await page.goto('/inventory.html');
 
@@ -32,10 +28,8 @@ test.describe('Checkout Test Scenarios', () => {
     await expect(page).toHaveURL(/checkout-complete/);
   });
 
- test('Checkout with empty first name and last name', async({page})=>{
-  const productPage = new ProductPage(page);
-    const cartPage = new CartPage(page);
-    const checkoutPage = new CheckoutPage(page);
+ test('Checkout with empty first name and last name', async({page, productPage, cartPage, checkoutPage})=>{
+  
 
     await page.goto('/inventory.html');
 
@@ -52,10 +46,8 @@ test.describe('Checkout Test Scenarios', () => {
     await checkoutPage.continue();
     await expect(page.getByText('Error: First Name is required')).toBeVisible();
   });
-  test ('Cancelling after reaching out to final process', async({page}) =>{
-     const productPage = new ProductPage(page);
-    const cartPage = new CartPage(page);
-    const checkoutPage = new CheckoutPage(page);
+  test ('Cancelling after reaching out to final process', async({page, productPage, checkoutPage, cartPage}) =>{
+
 
     await page.goto('/inventory.html');
 

@@ -1,35 +1,32 @@
-import {test, expect} from '@playwright/test';  
-import { ProductPage } from '../pages/ProductPage';
-import { CheckoutPage } from '../pages/CheckoutPage';
+import { test, expect } from '../fixtures/test-fixtures';
+
 
 
 test.use({ storageState: 'storage/Auth.json' });
 
 
 test.describe('Product Page Test Scenarios', () => {
-  test('Verify product title', async ({ page }) => {
-    const productPage = new ProductPage(page);
+  test('Verify product title', async ({ page, productPage }) => {
     await page.goto('/inventory.html');
     const title = await productPage.getProductTitle('Sauce Labs Backpack');
   await expect(title).toBeVisible();
   });
 
-  test('Verify product price', async ({ page }) => {
-    const productPage = new ProductPage(page);
+  test('Verify product price', async ({ page, productPage }) => {
+   
     await page.goto('/inventory.html');
     const price = await productPage.getProductPrice('Sauce Labs Backpack');
     await expect(price).toHaveText('$29.99');
   })
-  test('Verify product image', async ({ page }) => {
-    const productPage = new ProductPage(page);
+  test('Verify product image', async ({ page, productPage }) => {
+    
     await page.goto('/inventory.html');
     const image = await productPage.getProductImage('Sauce Labs Backpack');
     await expect(image).toBeVisible();
   })
 
   
- test('Add product to cart and removing it and then verify cart count', async ({ page }) => {
-    const productPage = new ProductPage(page);
+ test('Add product to cart and removing it and then verify cart count', async ({ page, productPage}) => {
     await page.goto('/inventory.html');
     await productPage.addToCart('Sauce Labs Backpack');
     const cartCount = page.locator('.shopping_cart_badge');
@@ -38,8 +35,7 @@ test.describe('Product Page Test Scenarios', () => {
     await expect(cartCount).toHaveCount(0);
   })
 
-  test('Adding multiple product to cart and verifying cart count', async({page}) => {
-    const productPage = new ProductPage (page);
+  test('Adding multiple product to cart and verifying cart count', async({page, productPage}) => {
     await page.goto ('/inventory.html');
     await productPage.addToCart('Sauce Labs Backpack');
     await productPage.addToCart('Sauce Labs Bolt T-Shirt');

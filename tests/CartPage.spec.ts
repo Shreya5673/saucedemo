@@ -1,13 +1,12 @@
-import { test, expect } from '@playwright/test';
-import { ProductPage } from '../pages/ProductPage';
+import { test, expect } from '../fixtures/test-fixtures';
+
 
 test.use({ storageState: 'storage/Auth.json' });
 
 test.describe('Cart Test Scenarios', () => {
 
-  test('Add product to cart', async ({ page }) => {
-    const productPage = new ProductPage(page);
-
+  test('Add product to cart', async ({ page, productPage }) => {
+   
     await page.goto('/inventory.html');
 
     await productPage.addToCart('Sauce Labs Backpack');
@@ -17,18 +16,17 @@ test.describe('Cart Test Scenarios', () => {
     await expect(cartCount).toHaveText('1');
   });
 
-  test('Open cart', async ({ page }) => {
-    const productPage = new ProductPage(page);
-
+  test('Open cart', async ({ page, productPage }) => {
+   
     await page.goto('/inventory.html');
 
     await productPage.openCart();
 
     await expect(page).toHaveURL(/cart.html/);
   });
-test ('Open cart with no product', async({page}) =>{
+test ('Open cart with no product', async({page, productPage}) =>{
 
-  const productPage = new ProductPage(page);
+  
 
   await page. goto('/inventory.html ');
 
@@ -37,8 +35,8 @@ test ('Open cart with no product', async({page}) =>{
   await expect(page.locator('.cart_item')).toHaveCount(0);
 
 })
-test('Remove a product that is not in the cart', async ({ page }) => {
-  const productPage = new ProductPage(page);
+test('Remove a product that is not in the cart', async ({ page, productPage}) => {
+
   await page.goto('/inventory.html');
 
   await productPage.openCart();

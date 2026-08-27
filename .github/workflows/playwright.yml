@@ -32,6 +32,7 @@ jobs:
         env:
           SAUCE_USERNAME: ${{ secrets.SAUCE_USERNAME }}
           SAUCE_PASSWORD: ${{ secrets.SAUCE_PASSWORD }}
+          BASE_URL: https://www.saucedemo.com
 
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
